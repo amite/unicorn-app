@@ -2,16 +2,29 @@
 lock '3.2.1'
 
 set :application, 'dwll'
-set :repo_url, 'git@example.com:me/my_repo.git'
-
+set :repo_url, 'git@github.com:amite/unicorn-app.git'
+set :deploy_user, 'deploy'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+set :deploy_to, '/home/deploy/dwll'
 
 # Default value for :scm is :git
-# set :scm, :git
+set :scm, :git
+
+set :rbenv_type, :system
+set :rbenv_ruby, '2.1.2'
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+
+set :keep_releases, 5
+
+# files we want symlinking to specific entries in shared
+set :linked_files, %w{config/database.yml config/secrets.yml}
+
+# dirs we want symlinking to shared
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for :format is :pretty
 # set :format, :pretty
